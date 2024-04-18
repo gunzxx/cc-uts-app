@@ -15,6 +15,7 @@ app.get('/', async (req,res) =>{
     });
 });
 
+app.use(express.json());
 app.use(userRouter);
 
 app.get('*', (req,res) =>{

@@ -1,5 +1,5 @@
 # membuild image dengan nama bookapp dengan tag v1 pada direktori saat ini
-docker build -t bookapp-be:v1 .
+docker build -t app:v1 .
 docker run -d -p 3001:3000 --network=uts-cc --name=bookapp-be bookapp-be:v1
 
 # menampilkan daftar image
