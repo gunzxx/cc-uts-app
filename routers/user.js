@@ -4,6 +4,7 @@ const router = express.Router();
 const { validationResult, body } = require('express-validator');
 const multer = require('multer');
 const upload = multer();
+const moment = require('moment'); 
 
 
 router.route('/note/:id')
@@ -74,10 +75,11 @@ router.route('/note')
     })
     .post(body('notes').notEmpty(), upload.array(), async (req, res) => {
         const result = validationResult(req);
+        const createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
 
         if (result.isEmpty()) {
             try {
-                const queryString = `INSERT INTO notes (notes, creator, created_at) VALUES ('${req.body.notes}', '${req.body.creator || ''}', ${+new Date()})`;
+                const queryString = `INSERT INTO notes (notes, creator, created_at) VALUES ('${req.body.notes}', '${req.body.creator || ''}', '${createdAt}')`;
                 const resultDB = await queryDB(queryString);
                 const note = (await queryDB(`SELECT * FROM notes where id = ${resultDB.insertId} limit 1`))[0];
                 console.log(note);
